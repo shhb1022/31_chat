@@ -43,7 +43,7 @@ class User extends Thread {
                             room = Blindroom;
                             room.userlist.add(this);
                             //클라한테 P 패킷 보내야함
-                            packet = new MessagePacker("p", 1, 0, 0, nick_id);
+                            packet = new MessagePacker("P", 1, 0, 0, nick_id);
                             RoomMsg(room, packet);
                         } else {
                             room = Publicroom;
