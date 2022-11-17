@@ -1,11 +1,8 @@
 package ser;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Vector;
 
 public class Server {
@@ -27,6 +24,8 @@ public class Server {
             while (true) {
                 System.out.println("[클라이언트 연결대기중]");
                 socket = serverSocket.accept();
+                System.out.println(serverSocket.getLocalPort());
+                System.out.println(serverSocket.isBound());
 
                 // client가 접속할때마다 새로운 스레드 생성
                 User receiveThread = new User(socket, this);

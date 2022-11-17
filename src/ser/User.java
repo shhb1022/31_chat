@@ -1,5 +1,4 @@
 package ser;
-import ser.MessagePacker;
 
 import java.io.*;
 import java.net.Socket;
@@ -21,11 +20,26 @@ class User extends Thread {
         this.socket = socket;
         this.Blindroom = Server.BlindRoom;
         this.Publicroom = Server.PublicRoom;
+        System.out.println("Blind Room : " + Blindroom);
+        System.out.println("Public Room : " + Publicroom);
+
 
         try {
             in = socket.getInputStream();
+            if(in == null) System.out.println("in is null");
+            System.out.println("in.toString()" + in.toString());
+            MessagePacker packet= MessagePacker.unpack(in);
+            System.out.println("이름>> "+packet.getNickId());
+            System.out.println("방>> "+packet.getRoomId());
+            if(packet.getRoomId().equals("1")) room=Blindroom;
+            else room=Publicroom;
+            System.out.println("room :" + room);
+            room.userlist.add(this);
+            Userlist.add(this);
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -34,6 +48,7 @@ class User extends Thread {
         MessagePacker packet;
         try {
             System.out.println("[새연결생성]");
+            in=socket.getInputStream();
             while (in != null) {
                 packet = MessagePacker.unpack(in);
                 String protocol;

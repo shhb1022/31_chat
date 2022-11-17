@@ -1,4 +1,4 @@
-package ser;
+package cli;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 public class MessagePacker {
     private JSONObject body;
 
-    public MessagePacker(String flag,int room_id, int status, int cur_num, String nick_id) {
+    public MessagePacker(String flag, int room_id, int status, int cur_num, String nick_id) {
         body = new JSONObject();
         body.put("flag",flag);
         body.put("room_id",String.valueOf(room_id));
@@ -25,7 +25,6 @@ public class MessagePacker {
         System.out.println("ser.MessagePacker : " + new String(data, StandardCharsets.UTF_8));
         body = (JSONObject) parser.parse(new String(data, StandardCharsets.UTF_8));
     }
-
     public static MessagePacker unpack(InputStream is) throws Exception {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         byte[] sizeBuf = new byte[2];
